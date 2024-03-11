@@ -24,6 +24,6 @@ export async function bootstrap(expressApp): Promise<INestApplication> {
 
   // Test the connection
   await sequilize.validate();
- // await sequilize.sync();
+  await sequilize.sync();
   return app;
 }

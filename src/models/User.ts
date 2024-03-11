@@ -1,11 +1,15 @@
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { IsEmail, IsEnum, IsNotEmpty } from 'class-validator';
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, Model, Table, DataType } from 'sequelize-typescript';
 import * as _ from 'lodash';
 import { UserRole } from './types';
 @Table({})
 @Exclude()
 export class User extends Model<User> {
+  @Column({ type: DataType.BIGINT, primaryKey: true, autoIncrement: true })
+  @Expose({ toPlainOnly: true })
+  id: number;
+
   @Column({ allowNull: false, unique: true })
   @Expose()
   @IsNotEmpty()
@@ -29,6 +33,7 @@ export class User extends Model<User> {
   @Column
   @Expose()
   phoneNumber: string;
+
   @Column
   @Expose()
   @IsNotEmpty()

@@ -3,5 +3,5 @@
   "API_PREFIX":"/api/v1",
   "JWTKEY":"HEDuk4i5Ml2ERGIGqy5Z9kdBh2KIi+iye2hkfiOw5pA=",
   "DATABASE_URL":"mysql://root:M@1234ithu@localhost:3306/inventory",
-  "TOKEN_EXPIRATION":50
+  "TOKEN_EXPIRATION":500
 }

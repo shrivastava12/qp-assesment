@@ -1,6 +1,8 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript';
 import { User } from './User';
 import * as config from 'config';
+import { Product } from './Product';
+import { Stock } from './Stock';
 
 const options: SequelizeOptions = {
   define: {
@@ -16,8 +18,8 @@ const options: SequelizeOptions = {
 const sequilize = new Sequelize(config.get<string>('DATABASE_URL'), options);
 
 //Initalize the models
-sequilize.addModels([User]);
+sequilize.addModels([User, Product, Stock]);
 
 export { sequilize };
 export * from './types';
-export { User };
+export { User, Product, Stock };

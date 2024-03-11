@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { User, UserRole } from 'src/models';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -8,6 +12,7 @@ export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   async validateUser(email: string, password: string) {
+    console.log(email, password, 'test');
     const user = await User.findOne({
       where: {
         email: email,
@@ -15,23 +20,36 @@ export class AuthService {
     });
 
     if (!user) {
-      return null;
+      throw new BadRequestException('User does not exists.');
     }
 
     const match = await this.comparePassword(password, user.password);
     if (!match) {
-      return null;
+      throw new ForbiddenException('Password does not matched.');
     }
-
     return user;
   }
 
   public async login(user) {
-    const token = await this.generateToken(user);
-    return { user, token };
+    const userInfo = await this.validateUser(user.email, user.password);
+
+    if (userInfo) {
+      delete userInfo.password;
+      const token = await this.generateToken(userInfo);
+      return { userInfo, token };
+    }
   }
 
   public async create(user) {
+    const userExist = await User.findOne({
+      where: {
+        email: user.email,
+      },
+    });
+
+    if (userExist) {
+      throw new ForbiddenException('This email already exists');
+    }
     const pass = await this.hashPassword(user.password);
     const role = UserRole.User;
     try {
@@ -42,8 +60,10 @@ export class AuthService {
         phoneNumber: user.phoneNumber,
         password: pass,
         role: role,
+        active: true,
       });
       const token = await this.generateToken(newUser);
+      delete newUser.password;
       return { user: newUser, token };
     } catch (error) {
       throw new BadRequestException({ message: error.errors[0].message });
@@ -51,7 +71,7 @@ export class AuthService {
     return;
   }
 
-  private async generateToken(user) {
+  private async generateToken(user: User) {
     const token = await this.jwtService.signAsync({ user });
     return token;
   }
