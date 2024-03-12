@@ -3,10 +3,12 @@ import { User } from './User';
 import * as config from 'config';
 import { Product } from './Product';
 import { Stock } from './Stock';
+import { Order } from './Order';
+import { OrderDetail } from './OrderDetails';
 
 const options: SequelizeOptions = {
   define: {
-    timestamps: false,
+    timestamps: true,
   },
   dialectOptions: {
     multipleStatements: true,
@@ -18,7 +20,7 @@ const options: SequelizeOptions = {
 const sequilize = new Sequelize(config.get<string>('DATABASE_URL'), options);
 
 //Initalize the models
-sequilize.addModels([User, Product, Stock]);
+sequilize.addModels([User, Product, Stock, Order, OrderDetail]);
 
 export { sequilize };
 export * from './types';

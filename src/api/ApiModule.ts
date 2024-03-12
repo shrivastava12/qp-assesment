@@ -3,6 +3,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
+import { StockModule } from './stock/stock.module';
 
 // Request logging
 const morganProvider = {
@@ -19,7 +20,7 @@ const serializationProvider = {
 };
 
 @Module({
-  imports: [MorganModule, AuthModule, ProductModule],
+  imports: [MorganModule, AuthModule, ProductModule, StockModule],
   providers: [morganProvider, serializationProvider],
 })
 export class ApiModule {}
