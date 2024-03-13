@@ -12,7 +12,7 @@ export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   async validateUser(email: string, password: string) {
-    console.log(email, password, 'test');
+
     const user = await User.findOne({
       where: {
         email: email,

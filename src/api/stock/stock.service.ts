@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { IAuthenticatedUser } from 'src/interfaces';
 import { ActionType, Product, Stock } from 'src/models';
 
 @Injectable()
 export class StockService {
-  async create(stock: Stock, user) {
+  async create(stock: Stock, user: IAuthenticatedUser) {
     try {
       stock.createdByUserId = user.id;
       stock.updatedByUserId = user.id;
@@ -36,7 +37,7 @@ export class StockService {
 
   async getAll() {
     try {
-      const response = await Stock.findAll({});
+      const response = await Stock.findAll({ raw: true });
       return response;
     } catch (error) {
       throw new BadRequestException(error?.message);

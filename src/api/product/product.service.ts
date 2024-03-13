@@ -54,7 +54,7 @@ export class ProductService {
 
   async getAll(): Promise<Product[]> {
     try {
-      const products = await Product.findAll({});
+      const products = await Product.findAll({ raw: true });
       return products;
     } catch (error) {
       throw new BadRequestException(error?.message);

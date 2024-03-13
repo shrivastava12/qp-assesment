@@ -1,19 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Order, OrderDetail, Product } from 'src/models';
 import * as _ from 'lodash';
+import { IAuthenticatedUser, IOrderRequest, IProduct } from 'src/interfaces';
 @Injectable()
 export class OrderService {
-  async create(order, user) {
+  async create(order: IOrderRequest, user: IAuthenticatedUser) {
     try {
       const orderData = {
         totalPrice: order.totalPrice,
         orderBy: user.id,
       };
       const orderResponse = await Order.create(orderData);
-      console.log(orderResponse, 'OrderResponse');
+
       if (orderResponse) {
         await this.updateProductQunatity(order.items);
-        const orderDetail = _.map(order.items, (product) => {
+        const orderDetail = _.map(order.items, (product: IProduct) => {
           return {
             orderId: orderResponse.id,
             productId: product.productId,

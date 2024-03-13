@@ -10,9 +10,12 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ProductService } from './product.service';
 import { Product } from 'src/models/Product';
+import { Roles } from 'src/decoraters/roles/roles.decorator';
+import { JwtAuthGuard } from 'src/gaurds/jwt.guard';
+import { RoleGuard } from 'src/gaurds/role/role.guard';
+import { UserRole } from 'src/models';
 
 @Controller('product')
 export class ProductController {
@@ -23,7 +26,8 @@ export class ProductController {
    * @param req
    * @returns
    */
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post('create')
   async create(@Body() product: Product, @Request() req) {
     return await this.productService.create(product, req.user);
@@ -35,7 +39,8 @@ export class ProductController {
    * @param req
    * @returns
    */
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Patch('update/:id')
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -50,7 +55,8 @@ export class ProductController {
    * @param id
    * @returns
    */
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: number) {
     return await this.productService.delete(id);
@@ -59,7 +65,8 @@ export class ProductController {
    *
    * @returns Product[]
    */
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(UserRole.User, UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Get('')
   async get(): Promise<Product[]> {
     return await this.productService.getAll();

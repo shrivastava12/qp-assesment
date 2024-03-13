@@ -7,8 +7,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { StockService } from './stock.service';
-import { AuthGuard } from '@nestjs/passport';
-import { Stock } from 'src/models';
+import { Stock, UserRole } from 'src/models';
+import { Roles } from 'src/decoraters/roles/roles.decorator';
+import { JwtAuthGuard } from 'src/gaurds/jwt.guard';
+import { RoleGuard } from 'src/gaurds/role/role.guard';
 
 @Controller('stock')
 export class StockController {
@@ -20,7 +22,8 @@ export class StockController {
    * @param req
    * @returns
    */
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Post('create')
   async create(@Body() body: Stock, @Request() req) {
     return await this.stockService.create(body, req.user);
@@ -30,7 +33,8 @@ export class StockController {
    *
    * @returns
    */
-  @UseGuards(AuthGuard('jwt'))
+  @Roles(UserRole.Admin)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @Get('getAll')
   async getAll() {
     return await this.stockService.getAll();

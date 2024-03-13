@@ -4,7 +4,7 @@ import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { StockModule } from './stock/stock.module';
-import { OrderModule } from "./order/order.module";
+import { OrderModule } from './order/order.module';
 
 // Request logging
 const morganProvider = {
