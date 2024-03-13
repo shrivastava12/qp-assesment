@@ -8,7 +8,7 @@ import {
   BelongsTo,
 } from 'sequelize-typescript';
 import { User } from './User';
-
+import * as _ from 'lodash';
 @Table({})
 @Exclude()
 export class Order extends Model<Order> {
@@ -30,6 +30,4 @@ export class Order extends Model<Order> {
   @Column({ allowNull: false })
   @Expose()
   totalPrice: number;
-
-  orderDate: Date;
 }

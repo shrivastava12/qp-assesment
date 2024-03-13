@@ -24,4 +24,4 @@ sequilize.addModels([User, Product, Stock, Order, OrderDetail]);
 
 export { sequilize };
 export * from './types';
-export { User, Product, Stock };
+export { User, Product, Stock, Order, OrderDetail };
