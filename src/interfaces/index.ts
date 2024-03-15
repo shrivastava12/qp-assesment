@@ -21,3 +21,7 @@ export interface IOrderRequest {
   totalPrice: number;
   items: IProduct[];
 }
+
+export interface IToken {
+  token: string;
+}

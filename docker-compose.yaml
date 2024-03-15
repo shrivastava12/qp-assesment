@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  mysqldb:
+    image: mysql
+    restart: always
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+    ports:
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+    volumes:
+      - db-config:/etc/mysql
+      - db-data:/var/lib/mysql
+      - ./db/backup/files/:/data_backup/data
+  
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: grocery-api
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    ports:
+      - 3000:3000
+    tty: true
+volumes: 
+  db-config:
+  db-data:

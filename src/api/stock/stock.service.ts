@@ -4,7 +4,10 @@ import { ActionType, Product, Stock } from 'src/models';
 
 @Injectable()
 export class StockService {
-  async create(stock: Stock, user: IAuthenticatedUser) {
+  async create(
+    stock: Stock,
+    user: IAuthenticatedUser,
+  ): Promise<Stock | string> {
     try {
       stock.createdByUserId = user.id;
       stock.updatedByUserId = user.id;
@@ -29,13 +32,13 @@ export class StockService {
       if (!response) {
         throw new BadRequestException('Bad Request');
       }
-      return response;
+      return response.get({ plain: true });
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
   }
 
-  async getAll() {
+  async getAll(): Promise<Stock[] | string> {
     try {
       const response = await Stock.findAll({ raw: true });
       return response;

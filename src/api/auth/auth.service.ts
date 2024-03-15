@@ -6,13 +6,11 @@ import {
 import { User, UserRole } from 'src/models';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import * as _ from 'lodash';
 @Injectable()
 export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
 
   async validateUser(email: string, password: string) {
-
     const user = await User.findOne({
       where: {
         email: email,
@@ -36,7 +34,7 @@ export class AuthService {
     if (userInfo) {
       delete userInfo.password;
       const token = await this.generateToken(userInfo);
-      return { userInfo, token };
+      return { token };
     }
   }
 
@@ -64,14 +62,14 @@ export class AuthService {
       });
       const token = await this.generateToken(newUser);
       delete newUser.password;
-      return { user: newUser, token };
+      return { token };
     } catch (error) {
       throw new BadRequestException({ message: error.errors[0].message });
     }
-    return;
   }
 
   private async generateToken(user: User) {
+    delete user.password;
     const token = await this.jwtService.signAsync({ user });
     return token;
   }

@@ -24,8 +24,8 @@ export class StockController {
    */
   @Roles(UserRole.Admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Post('create')
-  async create(@Body() body: Stock, @Request() req) {
+  @Post()
+  async create(@Body() body: Stock, @Request() req): Promise<Stock | string> {
     return await this.stockService.create(body, req.user);
   }
 
@@ -36,7 +36,7 @@ export class StockController {
   @Roles(UserRole.Admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Get('getAll')
-  async getAll() {
+  async getAll(): Promise<Stock[] | string> {
     return await this.stockService.getAll();
   }
 }

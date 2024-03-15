@@ -17,7 +17,7 @@ export class ProductService {
     }
   }
 
-  async update(id: number, product: Product, user) {
+  async update(id: number, product: Product, user): Promise<string> {
     try {
       const updatedValue = Object.fromEntries(
         Object.entries(product.dataValues).filter(
@@ -28,18 +28,18 @@ export class ProductService {
       );
       updatedValue.id = id;
       updatedValue.updatedByUserId = user.id;
-      const response = await Product.update(updatedValue, {
+      await Product.update(updatedValue, {
         where: {
           id: id,
         },
       });
-      return response;
+      return `Updated successfully`;
     } catch (error) {
       throw new BadRequestException(error?.message);
     }
   }
 
-  async delete(id: number) {
+  async delete(id: number): Promise<string> {
     try {
       const deletedItem = await Product.destroy({
         where: {

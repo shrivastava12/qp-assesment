@@ -28,8 +28,11 @@ export class ProductController {
    */
   @Roles(UserRole.Admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Post('create')
-  async create(@Body() product: Product, @Request() req) {
+  @Post()
+  async create(
+    @Body() product: Product,
+    @Request() req,
+  ): Promise<Product | string> {
     return await this.productService.create(product, req.user);
   }
 
@@ -41,12 +44,12 @@ export class ProductController {
    */
   @Roles(UserRole.Admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
-  @Patch('update/:id')
+  @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() product: Product,
     @Request() req,
-  ) {
+  ): Promise<string> {
     return await this.productService.update(id, product, req.user);
   }
 
@@ -58,7 +61,7 @@ export class ProductController {
   @Roles(UserRole.Admin)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number) {
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<string> {
     return await this.productService.delete(id);
   }
   /**
