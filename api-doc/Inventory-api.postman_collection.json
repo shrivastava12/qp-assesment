@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "ead1acef-1c2e-400d-9bdd-a3d437f001e4",
+		"name": "Inventory-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "27182318"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"shrivastava@gmail.com\",\n    \"password\":\"M@1234ithu\",\n    \"phoneNumber\":\"+91 7479530699\",\n    \"firstName\":\"pankaj\",\n    \"lastName\":\"Kishor\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/auth/signup"
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "create product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJlbWFpbCI6InNocml2YXN0YXZhNzQ3OTVAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkSkFLS3pPMVcyek5DbHI4UVVSS1huLmo4c1pjYUhzL3hMb2NValhXbEZtLkQyRGg2UnFhblMiLCJmaXJzdE5hbWUiOiJwYW5rYWoiLCJsYXN0TmFtZSI6Iktpc2hvciIsInBob25lTnVtYmVyIjoiKzkxIDc0Nzk1MzA2OTkiLCJyb2xlIjoiVXNlciIsImFjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wMy0xM1QwNjoxOTowMi4wMDBaIiwidXBkYXRlZEF0IjoiMjAyNC0wMy0xM1QwNjoxOTowMi4wMDBaIn0sImlhdCI6MTcxMDMxMDc0NSwiZXhwIjoxNzEwMzExMjQ1fQ.ZKjA0SxlPHz5HR-6K5sirOe5y5mDtucs799qx8bQmFI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"BMW\",\n    \"price\":23,\n    \"quantity\":224\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/api/v1/product/create"
+			},
+			"response": []
+		},
+		{
+			"name": "update product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJlbWFpbCI6InNocml2YXN0YXZhNzQ3QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJE1PWVFSSThOLkZVYng4c2lZUzhQNU9sT0xjS0JvM2EyRWxhNHI1SXRwdjMxZTZtWXZsRGVTIiwiZmlyc3ROYW1lIjoicGFua2FqIiwibGFzdE5hbWUiOiJLaXNob3IiLCJwaG9uZU51bWJlciI6Iis5MSA3NDc5NTMwNjk5Iiwicm9sZSI6IkFkbWluIiwiYWN0aXZlIjp0cnVlLCJjcmVhdGVkQXQiOiIyMDI0LTAzLTE1VDA2OjM2OjQyLjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDI0LTAzLTE1VDA2OjM2OjQyLjAwMFoifSwiaWF0IjoxNzEwNDg0ODI5LCJleHAiOjE3MTA0ODUzMjl9.5Xcmqt1gE-AKTHPJo-LDVpyNU162u5lozP8pxaJJap8"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\":300\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/api/v1/product/update/11"
+			},
+			"response": []
+		},
+		{
+			"name": "get all product",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "delete product",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "create stock",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "create order",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getAllStock",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
